@@ -3,9 +3,17 @@
 import subprocess
 import time
 
-plot = subprocess.Popen(['gnuplot', '-persist'], stdin=subprocess.PIPE)
-plot.stdin.write('\n')
+proc = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
+
+def plot(function):
+	proc.stdin.write(' plot %s\n' % function)
+
+def exit(proc):
+	proc.communicate('quit')
+
 
 for i in range(100):
-	plot.stdin.write(' plot sin(x+%i)\n' % i)
+	plot('sin(x+%i)' % i)
 	time.sleep(0.1)
+
+exit(proc)
