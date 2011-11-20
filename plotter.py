@@ -4,9 +4,19 @@ import time, sys
 import subprocess
 
 proc = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
+input_buffer = []
+
+def read(buff):
+	if sys.stdin:
+		point = sys.stdin.readline()
+		buff.append(point)
+		plot(proc, buff)
+
+def format(line, format_string):
+	pass
 
 def set(proc, setting):
-	proc.stdin.write(' set %s' % setting)
+	proc.stdin.write(' set %s\n' % setting)
 
 def plot(proc, points):
 	proc.stdin.write(" plot '-'\n")
@@ -20,13 +30,9 @@ def exit(proc):
 
 if __name__=='__main__':
 
-	#set('style function dots')
-	buff = []
+	set(proc, 'style data points')
 
 	while True:
-		if sys.stdin:
-			point = sys.stdin.readline()
-			buff.append(point)
-			plot(proc, buff)
+		read(input_buffer)
 
-	#exit(proc)
+	exit(proc)
