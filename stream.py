@@ -20,4 +20,4 @@ def log_entry(text):
 clear_log()
 while True:
 	log_entry(str(random())+' '+str(random()))
-	time.sleep(random()*2)
+	time.sleep(random()/4)

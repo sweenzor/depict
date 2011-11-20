@@ -5,11 +5,14 @@ import subprocess
 
 proc = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
 
-def set(setting):
+def set(proc, setting):
 	proc.stdin.write(' set %s' % setting)
 
-def plot(function):
-	proc.stdin.write(' plot %s\n' % function)
+def plot(proc, points):
+	proc.stdin.write(" plot '-'\n")
+	for point in points:
+		proc.stdin.write(point)
+	proc.stdin.write('e\n')
 
 def exit(proc):
 	proc.communicate('quit')
@@ -18,11 +21,12 @@ def exit(proc):
 if __name__=='__main__':
 
 	#set('style function dots')
+	buff = []
 
 	while True:
-		proc.stdin.write(" plot '-'\n")
-		line = sys.stdin.readline()
-		proc.stdin.write(line)
-		proc.stdin.write('e\n')
+		if sys.stdin:
+			point = sys.stdin.readline()
+			buff.append(point)
+			plot(proc, buff)
 
 	#exit(proc)
