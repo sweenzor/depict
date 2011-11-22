@@ -4,9 +4,27 @@ import time, sys
 import subprocess
 
 proc = subprocess.Popen(['gnuplot', '-noraise'], stdin=subprocess.PIPE)
-input_buffer = []
+
+class PlotBuffer(object):
+	"""Buffer for holding incoming streaming data"""
+
+	def __init__(self):
+		self.buffer = []
+	
+	def __getitem__(self, key):
+		return self.buffer[key]
+	
+	def manage_size(self):
+		if len(self.buffer) > 1000:
+			self.buffer = self.buffer[100:]
+	
+	def append(self, data):
+		self.buffer.append(data)
+
 
 def read_stdin(buff):
+	"""Upon input on stdin.."""
+
 	if sys.stdin:
 		point = sys.stdin.readline()
 		buff.append(point)
@@ -31,6 +49,7 @@ def exit(proc):
 if __name__=='__main__':
 
 	set(proc, 'style data points')
+	input_buffer = PlotBuffer()
 
 	while True:
 		read_stdin(input_buffer)
