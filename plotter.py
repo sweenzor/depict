@@ -3,10 +3,10 @@
 import time, sys
 import subprocess
 
-proc = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
+proc = subprocess.Popen(['gnuplot', '-noraise'], stdin=subprocess.PIPE)
 input_buffer = []
 
-def read(buff):
+def read_stdin(buff):
 	if sys.stdin:
 		point = sys.stdin.readline()
 		buff.append(point)
@@ -33,6 +33,6 @@ if __name__=='__main__':
 	set(proc, 'style data points')
 
 	while True:
-		read(input_buffer)
+		read_stdin(input_buffer)
 
 	exit(proc)

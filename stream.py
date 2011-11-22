@@ -2,6 +2,7 @@
 
 from random import random
 import time
+import os
 
 # this is just a silly litte script to generate a
 # pseudo log file to `tail -f` into the plotter
@@ -21,3 +22,6 @@ clear_log()
 while True:
 	log_entry(str(random())+' '+str(random()))
 	time.sleep(random()/4)
+	print 'generating random log..'
+	if os.path.getsize('awwlog.log') > 1000:
+		clear_log()
