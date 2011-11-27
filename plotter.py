@@ -2,6 +2,7 @@
 
 import time, sys
 import subprocess
+import argparse
 
 proc = subprocess.Popen(['gnuplot', '-noraise'], stdin=subprocess.PIPE)
 
@@ -21,6 +22,23 @@ class PlotBuffer(object):
 	def append(self, data):
 		self.buffer.append(data)
 
+def cmdline_interaction():
+	"""Command line argument handler"""
+
+	desc = 'Pipe data into depict to plot'
+
+	parser = argparse.ArgumentParser(
+			description=desc)
+
+	parser.add_argument( '-b', '--buffer',
+						action='store',
+						default=False,
+						dest='buffer_size',
+						help='set the buffer size')
+
+	cmdargs = parser.parse_args().__dict__
+
+	return cmdargs
 
 def read_stdin(buff):
 	"""Upon input on stdin.."""
@@ -48,7 +66,7 @@ def exit(proc):
 
 if __name__=='__main__':
 
-	set(proc, 'style data points')
+	cmdline_interaction()
 	input_buffer = PlotBuffer()
 
 	while True:
