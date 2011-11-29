@@ -45,11 +45,20 @@ def read_stdin(buff):
 
 	if sys.stdin:
 		point = sys.stdin.readline()
+		point = format(point)
 		buff.append(point)
 		plot(proc, buff)
 
-def format(line, format_string):
-	pass
+def format(line, format_string=''):
+	"""Detect formatting (or try too)"""
+
+	# Identify input formed like '(x,x)'
+	if '(' and ')' in line:
+		line = line[line.find('(')+1:line.find(')')]
+		line = line.split(',')
+		return str(line[0]+' '+line[1]+'\n')
+	
+	return line
 
 def set(proc, setting):
 	proc.stdin.write(' set %s\n' % setting)

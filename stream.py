@@ -22,7 +22,7 @@ clear_log()
 print 'generating random log..'
 
 while True:
-	log_entry(str(random())+' '+str(random()))
+	log_entry('('+str(random())+','+str(random())+')')
 	time.sleep(random()/4)
 	if os.path.getsize('awwlog.log') > 1000:
 		clear_log()
