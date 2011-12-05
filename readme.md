@@ -15,11 +15,11 @@ Alias the script like so:
 
 Transforms something like this:
 
-[image of monitor.py output]
+![raw](https://github.com/mattswe/depict/wiki/plot1.png)
 
 Into this:
 
-[image of depict output]
+![plot](https://github.com/mattswe/depict/wiki/plot2.png)
 
 
 ## Notes
